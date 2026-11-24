@@ -1,26 +1,123 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/png" href="./img/CILKGax.png" />
-        <title>Q🧡N</title>
-        <link rel="stylesheet" href="./css/style.css" />
-    </head>
-    <body class="page__main">
-        <div class="buttons">
-            <a href="index.html" class="btn btn-bir">NN❤</a>
-            <a href="timeline.html" class="btn btn-timeline">Lời chúc của tớ💌</a>
-            <a href="gallery.html" class="btn btn-gallery">Ảnh🎉</a>
-        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- 2. anh? -->
-        <img src="img/avt.jpg" alt="" class="cover" />
+    <link rel="icon" type="image/png" href="./img/CILKGax.png" />
+    <title>Q🧡N</title>
+    <link rel="stylesheet" href="./css/style.css" />
 
-        <!-- 3.  nhạc -->
-        <audio id="player" autoplay loop>
-            <source src="music/nguoi gieo mam xanh.mp3" type="audio/mp3" />
-        </audio>
-    </body>
+    <style>
+        /* Lớp chứa bóng bay */
+        #balloon-container {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Hình ảnh bóng bay */
+        .floating-balloon {
+            position: absolute;
+            bottom: -200px;
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            animation: balloonFly linear forwards;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Hiệu ứng bay lên */
+        @keyframes balloonFly {
+            0% {
+                transform: translateY(0) translateX(0) rotate(-5deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-55vh) translateX(25px) rotate(5deg);
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-120vh) translateX(-20px) rotate(-5deg);
+                opacity: 0;
+            }
+        }
+
+        /* Điều chỉnh trên điện thoại */
+        @media (max-width: 600px) {
+            .floating-balloon {
+                width: 105px;
+            }
+        }
+    </style>
+</head>
+
+<body class="page__main">
+
+    <!-- Hiệu ứng bóng bay -->
+    <div id="balloon-container"></div>
+
+    <div class="buttons">
+        <a href="index.html" class="btn btn-bir">NN❤</a>
+        <a href="timeline.html" class="btn btn-timeline">Lời chúc của tớ💌</a>
+        <a href="gallery.html" class="btn btn-gallery">Ảnh🎉</a>
+    </div>
+
+    <!-- Ảnh chính -->
+    <img src="img/avt.jpg" alt="" class="cover" />
+
+    <!-- Nhạc -->
+    <audio id="player" autoplay loop>
+        <source src="music/nguoi gieo mam xanh.mp3" type="audio/mp3" />
+    </audio>
+
+    <script>
+        const balloonContainer = document.getElementById("balloon-container");
+
+        function createBalloon() {
+            const balloon = document.createElement("img");
+
+            balloon.src = "img/balloons.png";
+            balloon.className = "floating-balloon";
+
+        
+            balloon.style.left = Math.random() * 90 + "%";
+
+            // Kích thước ngẫu nhiên
+            balloon.style.width = (110 + Math.random() * 70) + "px";
+
+            // Thời gian bay ngẫu nhiên
+            const duration = 9 + Math.random() * 5;
+            balloon.style.animationDuration = duration + "s";
+
+            balloonContainer.appendChild(balloon);
+
+            // Xóa bóng sau khi bay hết màn hình
+            balloon.addEventListener("animationend", function () {
+                balloon.remove();
+            });
+        }
+
+        // Tạo bóng bay liên tục
+        createBalloon();
+        setInterval(createBalloon, 1400);
+    </script>
+
+</body>
 </html>
